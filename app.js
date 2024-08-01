@@ -12,7 +12,8 @@ const connection = mysql.createConnection({
     host: 'alwaysdata.com',
     user: 'jerlene',
     password: 'Jsly2005',
-    database: 'jerlene_mini_proj'
+    database: 'jerlene_mini_proj',
+    port: 3307
 });
 
 // Callback function to log whether the connection to the database was successful or not
