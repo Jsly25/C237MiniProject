@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Timely</title>
+</head>
+
+<style>
+.table th {
+  background: rgb(195, 181, 245);
+  font-size: 16px;
+}
+
+td {
+  font-size: 16px;
+}
+
+.btn-success {
+  width: 90%;
+}
+
+.table-hover tbody tr:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-sm ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><b>TIMELY</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/addEvent">Add New Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/resume">Resume</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clockIn">Clock In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clockOut">Past Shifts</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <br>
+    <div class="text-center"><h2>Upcoming Events</h2></div>
+    <br>
+
+    <table class="table table-hover small text-center">
+      <thead>
+          <tr>
+            <th width="15%">Event Title</th>
+            <th width="15%">Date</th>
+            <th width="15%">Start Time</th>
+            <th width="15%">End Time</th>
+            <th width="10%">Clock In</th>
+            <th width="10%">Clock Out</th>
+            <th width="5%">Edit</th>
+            <th width="5%">Delete</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < work_schedule.length; i++) { 
+          let work_date = new Date(work_schedule[i].work_date);
+          let date = work_date.getFullYear() + '-' + ('0' + (work_date.getMonth() + 1)).slice(-2) + '-' + ('0' + work_date.getDate()).slice(-2);
+        %>
+        <tr onclick="window.location.href='/event/<%= work_schedule[i].schedule_id %>'">
+          <td><%= work_schedule[i].title %></td>
+          <td><%= date %></td>
+          <td><%= work_schedule[i].start_time %></td>
+          <td><%= work_schedule[i].end_time %></td>
+          <td>
+            <% if (work_schedule[i].clock_in_time) { %>
+              <span>Clocked in at <%= work_schedule[i].clock_in_time %></span>
+            <% } else { %>
+              <form action="/clockIn" method="POST">
+                <input type="hidden" name="schedule_id" value="<%= work_schedule[i].schedule_id %>">
+                <button type="submit" class="btn btn-success">Clock In</button>
+              </form>
+            <% } %>
+          </td>
+          <td>
+            <% if (work_schedule[i].clock_out_time) { %>
+              <span>Clocked out at <%= work_schedule[i].clock_out_time %></span>
+            <% } else { %>
+              <form action="/clockOut" method="POST">
+                <input type="hidden" name="schedule_id" value="<%= work_schedule[i].schedule_id %>">
+                <button type="submit" class="btn btn-danger">Clock Out</button>
+              </form>
+            <% } %>
+          </td>
+          <td><a href="/editEvent/<%= work_schedule[i].schedule_id %>"><i class="fa fa-pencil-square-o" style="font-size:23px;color:black"></i></a></td>
+          <td><a href="/deleteEvent/<%= work_schedule[i].schedule_id %>" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa fa-trash-o" style="font-size:23px;color:red"></i></a></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

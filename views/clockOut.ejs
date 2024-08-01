@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Clocked Out Events</title>
+</head>
+
+<style>
+  .table th{
+  background: rgb(231, 79, 29);
+  color:white;
+
+}
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><b>TIMELY</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/addEvent">Add New Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/resume">Resume</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clockIn">Clock In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clockOut">Past Shifts</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h1 class="text-center">History</h1>
+    <table class="table table-hover small text-center">
+      <thead>
+        <tr>
+          <th width="20%">Title</th>
+          <th width="20%">Date</th>
+          <th width="20%">Clock In Time</th>
+          <th width="20%">Clock Out Time</th>
+          <th width="15%">Duration</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% if (clocked_out_events.length > 0) { 
+            clocked_out_events.forEach(event => { 
+              let work_date = new Date(event.work_date);
+              let date = work_date.getFullYear() + '-' + ('0' + (work_date.getMonth() + 1)).slice(-2) + '-' + ('0' + work_date.getDate()).slice(-2);
+        %>
+          <tr>
+            <td><%= event.title %></td>
+            <td><%= date %></td>
+            <td><%= event.clock_in_time %></td>
+            <td><%= event.clock_out_time %></td>
+            <td><%= event.hours_worked %></td>
+          </tr>
+        <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="4">No clocked out events found.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <div class="text-center">
+      <a href ="/" class="btn btn-secondary">Back to Home</a></div>
+  </div>
+</body>
+</html>
+
+
+

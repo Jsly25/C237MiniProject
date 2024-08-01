@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Edit Resume</title>
+</head>
+
+<style>
+textarea.form-control {
+  width: 30%;
+  margin: 0 auto;
+}
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><b>TIMELY</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/addEvent">Add New Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/resume">Resume</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clockIn">Clock In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clockOut">Past Shifts</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container">
+        <br>
+        <div class="text-center"><h2>Update Resume</h2></div>
+        <br>
+        <div class="text-center">
+          <% if (resume) { %> 
+            <form action="/editResume/<%= resume.resume_id %>" method="POST">
+                <label for="job_title">Event Title:</label><br>
+                <input type="text" id="title" name="job_title" required value = <%= resume.job_title%> disabled><br><br>
+
+                <label for="start_work_date">Start Work Date:</label><br>
+                <input type="date" id="start_work_date" name="start_work_date" required><br><br>
+
+                <label for="end_work_date">End Work Date:</label><br>
+                <input type="date" id="end_work_date" name="end_work_date" required><br><br>
+
+                <label for="comments">Description:</label><br>
+                <textarea name="comments" rows="5" cols = "10" class="form-control" placeholder="Describe your job"></textarea><br><br>
+
+                <button class="btn btn-primary" type="submit">Update Resume</button><br><br>
+            </form>
+          <% } else { %>
+              <p>No Resume found.</p>
+          <% } %>
+          <a href ="/resume" class="btn btn-secondary">Back to Resume</a>
+        </div>
+    </div>
+</body>
+</html>
